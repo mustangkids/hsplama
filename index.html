@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Altin Iscilik</title>
+<style>
+body{font-family:Arial;background:linear-gradient(135deg,#f5af19,#f12711);padding:20px;margin:0}
+.box{max-width:900px;margin:0 auto;background:white;border-radius:20px;padding:30px;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+h1{text-align:center;color:#333;margin-bottom:5px}
+.subtitle{text-align:center;color:#666;margin-bottom:20px}
+input{width:100%;padding:15px;font-size:16px;border:2px solid #ddd;border-radius:8px;box-sizing:border-box;margin:10px 0}
+input:focus{outline:none;border-color:#f5af19}
+.item{background:#f8f9fa;padding:15px;margin:10px 0;border-radius:8px;cursor:pointer;border-left:4px solid #f5af19;transition:0.2s}
+.item:hover{background:#e9ecef;transform:translateX(5px)}
+.item strong{display:block;margin-bottom:5px}
+.item small{color:#666}
+.hide{display:none}
+button{background:linear-gradient(135deg,#f5af19,#f12711);color:white;padding:15px 30px;border:none;border-radius:8px;font-size:16px;cursor:pointer;font-weight:bold;margin-top:10px}
+button:hover{opacity:0.9}
+.result{background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:25px;border-radius:15px;margin-top:20px}
+.result h3{border-bottom:2px solid rgba(255,255,255,0.3);padding-bottom:15px;margin-bottom:15px}
+.result div{margin:10px 0;font-size:16px;display:flex;justify-content:space-between}
+.result .total{font-size:24px;font-weight:bold;margin-top:20px;padding-top:20px;border-top:2px solid rgba(255,255,255,0.3)}
+.gram-section{background:#fff3cd;padding:20px;border-radius:10px;margin-top:20px}
+.gram-section h3{color:#333;margin-bottom:10px}
+</style>
+</head>
+<body>
+<div class="box">
+<h1>⚜️ kilic</h1>
+<p class="subtitle">Altin Iscilik Hesaplama Sistemi</p>
+<h3>Urun Adi Yazin:</h3>
+<input type="text" id="ara" placeholder="Ornek: uzay, halat, kunye, alyans...">
+<div id="liste"></div>
+<div id="secim" class="hide gram-section">
+<h3 id="isim"></h3>
+<p>Gram Girin:</p>
+<input type="number" id="gram" step="0.01" placeholder="0">
+<button onclick="hesap()">Hesapla</button>
+</div>
+<div id="sonuc" class="hide result"></div>
+</div>
+<script>
+var d={
+"ALYANS":{k:"Yuzuk",t:1,tip:"tane"},
+"BAY BAYAN DOKUM YUZUK":{k:"Yuzuk",t:1,tip:"tane"},
+"BAY BAYAN TASLI YUZUK":{k:"Yuzuk",t:1,tip:"tane"},
+"ERKEK SOVALYE":{k:"Yuzuk",t:1,tip:"tane"},
+"DORIKA YUZUK 5GR KADAR":{k:"Yuzuk",t:1,max:5,tip:"tane"},
+"DORIKA YUZUK 5GR UZERI":{k:"Yuzuk",t:1.5,min:5,tip:"tane"},
+"FUZYON YUZUK GULLU":{k:"Yuzuk",t:1.5,tip:"tane"},
+"MUHTELIF KUPELER":{k:"Kupe",t:1,tip:"tane"},
+"DORIKA KUPELER":{k:"Kupe",t:1,tip:"tane"},
+"HINT KUPESI 10GR KADAR":{k:"Kupe",t:1.75,max:10,tip:"tane"},
+"HINT KUPESI 10GR UZERI":{k:"Kupe",t:2,min:10,tip:"tane"},
+"COCUK KUPESI":{k:"Kupe",t:0.5,tip:"carpan"},
+"CIFT SIFIR PULLU ZINCIR":{k:"Zincir",t:2,tip:"tane"},
+"0 NO ZINCIR":{k:"Zincir",t:2,tip:"tane"},
+"1 NO PULLU ZINCIR":{k:"Zincir",t:2,tip:"tane"},
+"2 VE 3 NO PULLU ZINCIR":{k:"Zincir",t:0.08,tip:"carpan"},
+"HALAT ZINCIR 10-20GR":{k:"Zincir",t:2,min:10,max:20,tip:"tane"},
+"HALAT ZINCIR 20GR UZERI":{k:"Zincir",t:0.1,min:20,tip:"carpan"},
+"ITALYAN HALAT":{k:"Zincir",t:1.5,tip:"tane"},
+"SINGAPUR ZINCIR 10GR KADAR":{k:"Zincir",t:1.25,max:10,tip:"tane"},
+"SINGAPUR ZINCIR 10GR UZERI":{k:"Zincir",t:0.12,min:10,tip:"carpan"},
+"TOPLU BIL VE GER 10GR KADAR":{k:"Zincir",t:1.5,max:10,tip:"tane"},
+"TOPLU BIL VE GER 10GR UZERI":{k:"Zincir",t:0.13,min:10,tip:"carpan"},
+"NISAN BILEZIGI":{k:"Bilezik",t:0.07,tip:"carpan"},
+"ANAHTARLI BURMA":{k:"Bilezik",t:2,tip:"tane"},
+"ITALYAN CARITIYE BILEZIGI":{k:"Bilezik",t:2,tip:"tane"},
+"BALO CEYREKLI BILEZIK":{k:"Bilezik",t:3.5,tip:"tane"},
+"7 SIRALI CEYREKLI BILEZIK":{k:"Bilezik",t:2,tip:"tane"},
+"UZAY SAMAN FIDAN 10-15GR":{k:"Bilezik",t:2,min:10,max:15,tip:"tane"},
+"UZAY SAMAN FIDAN 15GR UZERI":{k:"Bilezik",t:0.13,min:15,tip:"carpan"},
+"CARITIYE KUNYE 10GR KADAR":{k:"Kunye",t:1.5,max:10,tip:"tane"},
+"CARITIYE KUNYE 10GR UZERI":{k:"Kunye",t:2,min:10,tip:"tane"},
+"FUZYON KUNYE 10GR KADAR":{k:"Kunye",t:1.5,max:10,tip:"tane"},
+"FUZYON KUNYE 10GR UZERI":{k:"Kunye",t:0.15,min:10,tip:"carpan"},
+"5-6-7 GRAMLIK CITIR KUNYE":{k:"Kunye",t:1.25,tip:"tane"},
+"5-6-7 GRAMLIK CITIR KUNYE ALT":{k:"Kunye",t:1.25,tip:"tane"},
+"FANTAZI CEMCEM CITIR KOLYE":{k:"Kunye",t:1.5,tip:"tane"},
+"DORIKA KUNYE 10GR KADAR":{k:"Kunye",t:1.5,max:10,tip:"tane"},
+"DORIKA KUNYE 10GR UZERI":{k:"Kunye",t:0.12,min:10,tip:"carpan"},
+"HINT MADALYON 10GR KADAR":{k:"Madalyon",t:1.75,max:10,tip:"tane"},
+"HINT MADALYON 10GR UZERI":{k:"Madalyon",t:2,min:10,tip:"tane"},
+"DORIKA MADALYON":{k:"Madalyon",t:0.15,tip:"carpan"},
+"PRES VE DOKUM MADALYON":{k:"Madalyon",t:0.15,tip:"carpan"},
+"KABURGA 10-15GR":{k:"Kelepce",t:2,min:10,max:15,tip:"tane"},
+"KABURGA 15GR UZERI":{k:"Kelepce",t:0.1,min:15,tip:"carpan"},
+"KARTIYER KELEPCE 10GR KADAR":{k:"Kelepce",t:1.5,max:10,tip:"tane"},
+"KARTIYER KELEPCE 10GR UZERI":{k:"Kelepce",t:0.13,min:10,tip:"carpan"},
+"DORIKA KELEPCE 10GR KADAR":{k:"Kelepce",t:1.5,max:10,tip:"tane"},
+"DORIKA KELEPCE 10GR UZERI":{k:"Kelepce",t:2,min:10,tip:"tane"},
+"SARNEL BILEZIK":{k:"Bilezik",t:0.025,tip:"carpan"},
+"CNS BILEZIK":{k:"Bilezik",t:0.025,tip:"carpan"},
+"ICI BOS HEDIYELIK BILEZIK":{k:"Bilezik",t:1,tip:"tane"},
+"6-9 GRAM SARNEL HEDIYELIK":{k:"Bilezik",t:0.7,tip:"carpan"},
+"6-9 GRAM CNS HEDIYELIK":{k:"Bilezik",t:0.7,tip:"carpan"},
+"COCUK BILEZIGI MUHTELIF":{k:"Bilezik",t:0.7,tip:"carpan"},
+"KAPALI SETLER":{k:"Set",t:0.08,tip:"carpan"},
+"HASIR SETLER":{k:"Set",t:0.13,tip:"carpan"},
+"URFA SETLERI":{k:"Set",t:0.08,tip:"carpan"},
+"TRABZON SETLERI":{k:"Set",t:0.14,tip:"carpan"},
+"HINT SETLERI":{k:"Set",t:0.13,tip:"carpan"},
+"MADONNA SETLERI":{k:"Set",t:0.07,tip:"carpan"},
+"PESMERGE VE EL USTU SET":{k:"Set",t:1,tip:"carpan"},
+"COCUK KUNYESI":{k:"Diger",t:1,tip:"tane"},
+"CITIR KOLYE UCU":{k:"Diger",t:1,tip:"tane"},
+"HARIF":{k:"Diger",t:0.25,tip:"tane"},
+"GULEN BEBE MASALLAH":{k:"Diger",t:0.25,tip:"tane"}
+};
+var s=null;
+var matches=[];
+document.getElementById('ara').oninput=function(){
+var txt=this.value.toUpperCase();
+var liste=document.getElementById('liste');
+liste.innerHTML='';
+matches=[];
+if(txt.length==0)return;
+for(var k in d){
+if(k.indexOf(txt)>-1){
+matches.push(k);
+var x=document.createElement('div');
+x.className='item';
+var st=document.createElement('strong');
+st.textContent=k;
+x.appendChild(st);
+var sm=document.createElement('small');
+sm.textContent=d[k].k+' - '+(d[k].tip=='tane'?'TANE '+d[k].t+' GR':d[k].t+' GR');
+x.appendChild(sm);
+x.setAttribute('data-key',k);
+x.onclick=function(){sec(this.getAttribute('data-key'))};
+liste.appendChild(x);
+}
+}
+};
+function sec(key){
+s=key;
+document.getElementById('isim').textContent=key;
+document.getElementById('gram').value='';
+document.getElementById('ara').value='';
+document.getElementById('liste').innerHTML='';
+document.getElementById('secim').className='gram-section';
+document.getElementById('sonuc').className='hide';
+document.getElementById('gram').focus();
+}
+function hesap(){
+if(!s)return;
+var gr=parseFloat(document.getElementById('gram').value);
+if(!gr||gr<=0){alert('Gram girin!');return;}
+var selectedKey=s;
+for(var k in d){
+var info=d[k];
+if(k==selectedKey||k.indexOf(selectedKey)>-1){
+if(info.min!==undefined&&gr<info.min)continue;
+if(info.max!==undefined&&gr>info.max)continue;
+selectedKey=k;
+break;
+}
+}
+var secilenler=[];
+for(var k in d){
+var info=d[k];
+var base=k.replace(/ \d+.*$/,'');
+if(selectedKey.indexOf(base)>-1){
+if(info.min!==undefined&&gr>=info.min&&(info.max===undefined||gr<=info.max)){
+secilenler.push(k);
+}else if(info.max!==undefined&&info.min===undefined&&gr<=info.max){
+secilenler.push(k);
+}else if(info.min===undefined&&info.max===undefined){
+secilenler.push(k);
+}
+}
+}
+var secilen=selectedKey;
+if(secilenler.length>0){
+secilenler.sort(function(a,b){
+var ai=d[a];
+var bi=d[b];
+if(ai.min!==undefined&&bi.min===undefined)return -1;
+if(ai.min===undefined&&bi.min!==undefined)return 1;
+if(ai.min!==undefined&&bi.min!==undefined)return bi.min-ai.min;
+return 0;
+});
+for(var i=0;i<secilenler.length;i++){
+var kk=secilenler[i];
+var ii=d[kk];
+if(ii.min!==undefined&&gr>=ii.min){
+if(ii.max===undefined||gr<=ii.max){
+secilen=kk;
+break;
+}
+}else if(ii.max!==undefined&&gr<=ii.max){
+secilen=kk;
+break;
+}
+}
+}
+var info=d[secilen];
+var iscilik=0;
+if(info.tip=='tane'){
+iscilik=info.t;
+}else{
+iscilik=gr*info.t;
+}
+var toplam=gr+iscilik;
+var r=document.getElementById('sonuc');
+r.innerHTML='';
+var h=document.createElement('h3');
+h.textContent=secilen;
+r.appendChild(h);
+var d1=document.createElement('div');
+d1.innerHTML='<span>Kategori:</span><strong>'+info.k+'</strong>';
+r.appendChild(d1);
+var d2=document.createElement('div');
+d2.innerHTML='<span>Girilen Gram:</span><strong>'+gr+' GR</strong>';
+r.appendChild(d2);
+var d3=document.createElement('div');
+d3.innerHTML='<span>Iscilik:</span><strong>'+iscilik.toFixed(2)+' GR</strong>';
+r.appendChild(d3);
+var d4=document.createElement('div');
+d4.className='total';
+d4.innerHTML='<span>TOPLAM:</span><strong>'+toplam.toFixed(2)+' GR</strong>';
+r.appendChild(d4);
+r.className='result';
+}
+document.getElementById('gram').onkeypress=function(e){if(e.key=='Enter')hesap()};
+</script>
+</body>
+</html>
