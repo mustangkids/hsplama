@@ -2,40 +2,58 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Altin Iscilik</title>
 <style>
-body{font-family:Arial;background:linear-gradient(135deg,#f5af19,#f12711);padding:20px;margin:0}
-.box{max-width:900px;margin:0 auto;background:white;border-radius:20px;padding:30px;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
-h1{text-align:center;color:#333;margin-bottom:5px}
-.subtitle{text-align:center;color:#666;margin-bottom:20px}
-input{width:100%;padding:15px;font-size:16px;border:2px solid #ddd;border-radius:8px;box-sizing:border-box;margin:10px 0}
-input:focus{outline:none;border-color:#f5af19}
-.item{background:#f8f9fa;padding:15px;margin:10px 0;border-radius:8px;cursor:pointer;border-left:4px solid #f5af19;transition:0.2s}
-.item:hover{background:#e9ecef;transform:translateX(5px)}
-.item strong{display:block;margin-bottom:5px}
-.item small{color:#666}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:linear-gradient(135deg,#f5af19,#f12711);min-height:100vh;padding:15px}
+.box{max-width:900px;margin:0 auto;background:white;border-radius:20px;padding:20px;box-shadow:0 10px 40px rgba(0,0,0,0.2)}
+h1{text-align:center;color:#333;font-size:24px;margin-bottom:8px;line-height:1.3}
+@media(min-width:768px){h1{font-size:32px}}
+.subtitle{text-align:center;color:#666;margin-bottom:25px;font-size:14px}
+@media(min-width:768px){.subtitle{font-size:16px}}
+h3{color:#333;font-size:18px;margin-bottom:12px}
+@media(min-width:768px){h3{font-size:20px}}
+input{width:100%;padding:18px;font-size:17px;border:2px solid #ddd;border-radius:12px;margin:12px 0;-webkit-appearance:none}
+@media(min-width:768px){input{font-size:16px;padding:15px}}
+input:focus{outline:none;border-color:#f5af19;box-shadow:0 0 0 3px rgba(245,175,25,0.1)}
+.item{background:#f8f9fa;padding:18px;margin:12px 0;border-radius:12px;cursor:pointer;border-left:5px solid #f5af19;transition:0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+.item:active{transform:scale(0.98)}
+.item:hover{background:#e9ecef;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+.item strong{display:block;margin-bottom:8px;font-size:17px;color:#333}
+@media(min-width:768px){.item strong{font-size:16px}}
+.item small{color:#666;font-size:15px}
+@media(min-width:768px){.item small{font-size:14px}}
 .hide{display:none}
-button{background:linear-gradient(135deg,#f5af19,#f12711);color:white;padding:15px 30px;border:none;border-radius:8px;font-size:16px;cursor:pointer;font-weight:bold;margin-top:10px}
-button:hover{opacity:0.9}
-.result{background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:25px;border-radius:15px;margin-top:20px}
-.result h3{border-bottom:2px solid rgba(255,255,255,0.3);padding-bottom:15px;margin-bottom:15px}
-.result div{margin:10px 0;font-size:16px;display:flex;justify-content:space-between}
-.result .total{font-size:24px;font-weight:bold;margin-top:20px;padding-top:20px;border-top:2px solid rgba(255,255,255,0.3)}
-.gram-section{background:#fff3cd;padding:20px;border-radius:10px;margin-top:20px}
-.gram-section h3{color:#333;margin-bottom:10px}
+button{width:100%;background:linear-gradient(135deg,#f5af19,#f12711);color:white;padding:18px;border:none;border-radius:12px;font-size:18px;cursor:pointer;font-weight:bold;margin-top:15px;box-shadow:0 4px 12px rgba(245,175,25,0.3);transition:0.2s}
+button:active{transform:scale(0.98)}
+button:hover{box-shadow:0 6px 16px rgba(245,175,25,0.4)}
+.result{background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:25px;border-radius:15px;margin-top:20px;box-shadow:0 8px 20px rgba(0,0,0,0.2)}
+.result h3{border-bottom:2px solid rgba(255,255,255,0.3);padding-bottom:15px;margin-bottom:20px;color:white;font-size:19px}
+@media(min-width:768px){.result h3{font-size:18px}}
+.result div{margin:15px 0;font-size:17px;display:flex;justify-content:space-between;align-items:center}
+@media(min-width:768px){.result div{font-size:16px;margin:12px 0}}
+.result .total{font-size:22px;font-weight:bold;margin-top:25px;padding-top:20px;border-top:2px solid rgba(255,255,255,0.3)}
+@media(min-width:768px){.result .total{font-size:24px}}
+.gram-section{background:#fff3cd;padding:25px;border-radius:12px;margin-top:20px;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+@media(min-width:768px){.gram-section{padding:20px}}
+.gram-section h3{color:#333;margin-bottom:15px;font-size:19px}
+@media(min-width:768px){.gram-section h3{font-size:18px}}
+.gram-section p{color:#666;font-size:16px;margin-bottom:8px}
+@media(min-width:768px){.gram-section p{font-size:15px}}
 </style>
 </head>
 <body>
-<div class="box">
-<h1>⚜️ kilic</h1>
+<div class="box">W
+<h1>⚜️ KİLİC</h1>
 <p class="subtitle">Altin Iscilik Hesaplama Sistemi</p>
 <h3>Urun Adi Yazin:</h3>
-<input type="text" id="ara" placeholder="Ornek: uzay, halat, kunye, alyans...">
+<input type="text" id="ara" placeholder="Ornek: uzay, halat, kunye...">
 <div id="liste"></div>
 <div id="secim" class="hide gram-section">
 <h3 id="isim"></h3>
 <p>Gram Girin:</p>
-<input type="number" id="gram" step="0.01" placeholder="0">
+<input type="number" id="gram" step="0.01" placeholder="0" inputmode="decimal">
 <button onclick="hesap()">Hesapla</button>
 </div>
 <div id="sonuc" class="hide result"></div>
@@ -77,7 +95,6 @@ var d={
 "FUZYON KUNYE 10GR KADAR":{k:"Kunye",t:1.5,max:10,tip:"tane"},
 "FUZYON KUNYE 10GR UZERI":{k:"Kunye",t:0.15,min:10,tip:"carpan"},
 "5-6-7 GRAMLIK CITIR KUNYE":{k:"Kunye",t:1.25,tip:"tane"},
-"5-6-7 GRAMLIK CITIR KUNYE ALT":{k:"Kunye",t:1.25,tip:"tane"},
 "FANTAZI CEMCEM CITIR KOLYE":{k:"Kunye",t:1.5,tip:"tane"},
 "DORIKA KUNYE 10GR KADAR":{k:"Kunye",t:1.5,max:10,tip:"tane"},
 "DORIKA KUNYE 10GR UZERI":{k:"Kunye",t:0.12,min:10,tip:"carpan"},
@@ -110,16 +127,13 @@ var d={
 "GULEN BEBE MASALLAH":{k:"Diger",t:0.25,tip:"tane"}
 };
 var s=null;
-var matches=[];
 document.getElementById('ara').oninput=function(){
 var txt=this.value.toUpperCase();
 var liste=document.getElementById('liste');
 liste.innerHTML='';
-matches=[];
 if(txt.length==0)return;
 for(var k in d){
 if(k.indexOf(txt)>-1){
-matches.push(k);
 var x=document.createElement('div');
 x.className='item';
 var st=document.createElement('strong');
@@ -149,25 +163,16 @@ if(!s)return;
 var gr=parseFloat(document.getElementById('gram').value);
 if(!gr||gr<=0){alert('Gram girin!');return;}
 var selectedKey=s;
-for(var k in d){
-var info=d[k];
-if(k==selectedKey||k.indexOf(selectedKey)>-1){
-if(info.min!==undefined&&gr<info.min)continue;
-if(info.max!==undefined&&gr>info.max)continue;
-selectedKey=k;
-break;
-}
-}
 var secilenler=[];
 for(var k in d){
 var info=d[k];
 var base=k.replace(/ \d+.*$/,'');
-if(selectedKey.indexOf(base)>-1){
+if(selectedKey.indexOf(base)>-1||base.indexOf(selectedKey.replace(/ \d+.*$/,''))>-1){
 if(info.min!==undefined&&gr>=info.min&&(info.max===undefined||gr<=info.max)){
 secilenler.push(k);
 }else if(info.max!==undefined&&info.min===undefined&&gr<=info.max){
 secilenler.push(k);
-}else if(info.min===undefined&&info.max===undefined){
+}else if(info.min===undefined&&info.max===undefined&&k==selectedKey){
 secilenler.push(k);
 }
 }
@@ -228,3 +233,4 @@ document.getElementById('gram').onkeypress=function(e){if(e.key=='Enter')hesap()
 </script>
 </body>
 </html>
+EOF
